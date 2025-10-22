@@ -1,4 +1,5 @@
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import React from 'react'
 import "./Sidebar.css";
 import logo from "../assets/logo.svg";
 import homeIcon from "../assets/icon-nav-home.svg";
@@ -8,7 +9,7 @@ import bookmarkIcon from "../assets/icon-nav-bookmark.svg";
 import avatar from "../assets/image-avatar.png";
 
 
-export default function Sidebar(){
+export default function Sidebar() {
     return(
         <aside className="sidebar">
             <div className="sidebar-top">
@@ -18,7 +19,7 @@ export default function Sidebar(){
                 <NavLink to='/HomePage' end title="Home">
                     <img src={homeIcon} alt="home"/>
                 </NavLink>
-                <NavLink to='/movies' end title="Movies">
+                <NavLink to='/Movies' end title="Movies">
                     <img src={moviesIcon} alt="movies"/>
                 </NavLink>
                 <NavLink to='/TVseries' end title="tv series">
