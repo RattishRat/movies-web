@@ -1,0 +1,21 @@
+{
+  "users": [
+    {
+      "id": "d991",
+      "firstName": "Jonas",
+      "lastName": "Jonaitis",
+      "email": "test@test.lt",
+      "password": "Slaptas123!"
+    },
+    {
+      "id": "569b",
+      "firstName": "asd",
+      "lastName": "asdas",
+      "email": "adas@asd.com",
+      "password": "nedas12345678"
+    }
+  ],
+  "movies": [],
+  "bookmarks": [],
+  "tvseries": []
+}
