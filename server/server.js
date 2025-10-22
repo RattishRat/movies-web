@@ -1,4 +1,4 @@
-// movies-web/server/server.js
+
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
@@ -6,18 +6,15 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// --- paths to your frontend folders (adjust if different) ---
-const frontendRoot = path.join(__dirname, '..', 'frontend', 'movies'); 
-const frontendPublic = path.join(frontendRoot, 'public'); // where data.json lives
-const frontendSrcAssets = path.join(frontendRoot, 'src', 'assets'); // where thumbnails live
 
-// Serve the src assets at /assets
+const frontendRoot = path.join(__dirname, '..', 'frontend', 'movies'); 
+const frontendPublic = path.join(frontendRoot, 'public'); 
+const frontendSrcAssets = path.join(frontendRoot, 'src', 'assets'); 
+
+
 app.use('/assets', express.static(frontendSrcAssets));
 
-// Optional: serve the frontend public at /public (useful for debugging)
-// app.use('/public', express.static(frontendPublic));
 
-// API: read public/data.json, transform asset paths, return JSON
 app.get('/api/movies', (req, res) => {
   const dataJsonPath = path.join(frontendPublic, 'data.json');
   fs.readFile(dataJsonPath, 'utf8', (err, raw) => {
@@ -28,7 +25,7 @@ app.get('/api/movies', (req, res) => {
     try {
       const json = JSON.parse(raw);
 
-      // Walk and replace paths that reference assets (like "./assets/..." or "../assets/...")
+      
       const transform = (value) => {
         if (Array.isArray(value)) return value.map(transform);
         if (value && typeof value === 'object') {
@@ -37,9 +34,9 @@ app.get('/api/movies', (req, res) => {
           return out;
         }
         if (typeof value === 'string') {
-          // Normalize leading ./ or ../
+          
           const withoutDots = value.replace(/^\.\//, '').replace(/^\.\.\//, '');
-          // if it points to assets/..., convert to /assets/...
+          
           if (withoutDots.startsWith('assets/')) {
             return '/assets/' + withoutDots.slice('assets/'.length);
           }
@@ -57,7 +54,7 @@ app.get('/api/movies', (req, res) => {
   });
 });
 
-// (Optional health)
+
 app.get('/health', (req, res) => res.json({ ok: true }));
 
 app.listen(PORT, () => {
