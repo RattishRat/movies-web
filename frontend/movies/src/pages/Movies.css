@@ -1,13 +1,12 @@
-.bookmarks-page {
+.movies-page {
   display: flex;
   flex-direction: column;
   gap: 40px;
   color: white;
   width: 100%;
-  max-width: 1600px; 
-  margin: 0 auto; 
+  max-width: 1600px;
+  margin: 0 auto;
 }
-
 
 .search-bar {
   width: 100%;
@@ -21,58 +20,54 @@
   margin-bottom: 10px;
 }
 
-
-.bookmarks-section {
+.movies-section {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-
-.bookmarks-section h2 {
+.movies-section h2 {
   font-size: 1.5rem;
   font-weight: 500;
   margin-bottom: 10px;
 }
 
 
-/* Bookmark grid */
-.bookmark-grid {
+.movie-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 24px;
   width: 100%;
-  justify-items: center; /* center cards so they don't stretch */
+  align-items: start;
 }
 
-/* Fix bookmark card size */
-.bookmark-card {
+
+.movie-card {
   background-color: #161d2f;
   border-radius: 12px;
   overflow: hidden;
   position: relative;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  width: 200px; /* fixed width */
-  max-width: 100%; /* responsive on smaller screens */
+  width: 100%;
+  max-width: 300px; 
+  justify-self: center;
 }
 
-.bookmark-card:hover {
+.movie-card:hover {
   transform: translateY(-4px);
   box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
 }
 
 
-/* ✅ Fixed-size thumbnail container using aspect-ratio */
 .thumb-container {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9; /* keeps 16:9 ratio */
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   border-radius: 12px;
-  flex-shrink: 0;
 }
 
-.bookmark-thumb {
+.movie-thumb {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -80,34 +75,51 @@
   transition: opacity 0.3s ease;
 }
 
-
-.bookmark-info {
-  padding: 10px 12px;
+.play-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.bookmark-info .meta {
-  font-size: 0.85rem;
-  color: #aaa;
-  margin-bottom: 4px;
+.thumb-container:hover .play-overlay {
+  opacity: 1;
 }
 
-.bookmark-info h3 {
+.play-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.25);
+  padding: 8px 20px;
+  border-radius: 28px;
+  backdrop-filter: blur(6px);
+  transition: background 0.2s ease;
+}
+
+.play-button:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.play-button img {
+  width: 20px;
+  height: 20px;
+}
+
+.play-button span {
   font-size: 1rem;
-  margin: 0;
+  font-weight: 500;
+  color: white;
 }
 
-
-.empty-msg {
-  color: #999;
-  font-size: 0.9rem;
-  text-align: center;
-}
-
-
-.bookmark-card {
-  position: relative;
-}
-
+/* Bookmark */
 .bookmark-icon {
   position: absolute;
   top: 8px;
@@ -128,39 +140,57 @@
   transform: scale(1.1);
 }
 
-.bookmark-icon svg {
-  display: block;
-}
-
-.bookmark-icon.bookmarked svg {
-  fill: white;
+.bookmark-icon.bookmarked img {
+  filter: brightness(200%);
 }
 
 
+.movie-info {
+  padding: 10px 12px;
+}
 
+.movie-info .meta {
+  font-size: 0.85rem;
+  color: #aaa;
+  margin-bottom: 4px;
+}
+
+.movie-info h3 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+
+.empty-msg {
+  color: #999;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Responsive */
 @media (max-width: 1024px) {
-  .bookmarks-page {
+  .movies-page {
     padding: 0 20px;
   }
 }
 
 @media (max-width: 768px) {
-  .bookmark-grid {
+  .movie-grid {
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: 16px;
   }
 
-  .bookmarks-section h2 {
+  .movies-section h2 {
     font-size: 1.25rem;
   }
 
-  .bookmark-info h3 {
+  .movie-info h3 {
     font-size: 0.9rem;
   }
 }
 
 @media (max-width: 480px) {
-  .bookmarks-page {
+  .movies-page {
     padding: 0 10px;
   }
 
@@ -169,7 +199,7 @@
     padding: 10px 12px;
   }
 
-  .bookmark-grid {
-    grid-template-columns: 1fr; 
+  .movie-grid {
+    grid-template-columns: 1fr;
   }
 }
