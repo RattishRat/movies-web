@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from "react";
 import "./Bookmarks.css";
 
+
 export default function Bookmarks() {
   const [movies, setMovies] = useState([]);
   const [series, setSeries] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Load data
+  // 1) Užkraunam duomenis iš json-server
   useEffect(() => {
-    fetch("/data.json")
+    fetch("http://localhost:3000/movies")
       .then((res) => res.json())
       .then((json) => {
+        // json-server grąžina masyvą (pvz. [ {...}, {...} ])
         setMovies(json.filter((item) => item.category === "Movie"));
         setSeries(json.filter((item) => item.category === "TV Series"));
       })
-      .catch((err) => console.error("Error loading data.json:", err));
+      .catch((err) => console.error("Error loading from json-server:", err));
   }, []);
 
-  // Load bookmarks from localStorage
+  // 2) Uždedam bookmark būseną iš localStorage (kaip ir turėjai)
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("bookmarks")) || {};
     setMovies((prev) =>
@@ -28,7 +30,7 @@ export default function Bookmarks() {
     );
   }, []);
 
-  // Toggle bookmark
+  // 3) Perjungiam bookmark (vietinis state + localStorage)
   const toggleBookmark = (item, type) => {
     if (type === "Movie") {
       setMovies((prev) =>
@@ -49,7 +51,7 @@ export default function Bookmarks() {
     localStorage.setItem("bookmarks", JSON.stringify(saved));
   };
 
-  // Filters
+  // 4) Filtrai
   const filteredMovies = movies
     .filter((m) => m.isBookmarked)
     .filter((m) => m.title.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -58,7 +60,7 @@ export default function Bookmarks() {
     .filter((s) => s.isBookmarked)
     .filter((s) => s.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
-  // Card Renderer
+  // 5) Kortelės UI
   const renderCard = (item, type) => (
     <div key={item.title} className="bookmark-card">
       <div className="thumb-container">
@@ -78,6 +80,7 @@ export default function Bookmarks() {
       <div
         className={`bookmark-icon ${item.isBookmarked ? "bookmarked" : ""}`}
         onClick={() => toggleBookmark(item, type)}
+        title={item.isBookmarked ? "Remove bookmark" : "Add bookmark"}
       >
         <img src="../assets/icon-nav-bookmark.svg" alt="bookmark icon" />
       </div>
