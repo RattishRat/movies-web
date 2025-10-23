@@ -32,21 +32,31 @@ export default function Movies() {
     m.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // ✅ renderCard returns ONE parent <div> (fixes your error)
+  // Render each movie card
   const renderCard = (movie) => {
     return (
       <div key={movie.title} className="movie-card">
-        <img
-          src={movie.thumbnail?.regular?.large}
-          alt={movie.title}
-          className="movie-thumb"
-        />
+        <div className="thumb-container">
+          <img
+            src={movie.thumbnail?.regular?.large}
+            alt={movie.title}
+            className="movie-thumb"
+          />
+          <div className="play-overlay">
+            <div className="play-button">
+              <img src="../assets/icon-play.svg" alt="Play icon" />
+              <span>Play</span>
+            </div>
+          </div>
+        </div>
+
         <div
           className={`bookmark-icon ${movie.isBookmarked ? "bookmarked" : ""}`}
           onClick={() => toggleBookmark(movie)}
         >
           <img src="../assets/icon-nav-bookmark.svg" alt="bookmark icon" />
         </div>
+
         <div className="movie-info">
           <p className="meta">
             {movie.year} • {movie.category} • {movie.rating}
@@ -55,7 +65,7 @@ export default function Movies() {
         </div>
       </div>
     );
-}
+  };
 
   return (
     <div className="movies-page">

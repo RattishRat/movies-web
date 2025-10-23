@@ -36,19 +36,24 @@
 }
 
 
+/* Bookmark grid */
 .bookmark-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 24px;
   width: 100%;
+  justify-items: center; /* center cards so they don't stretch */
 }
 
-
+/* Fix bookmark card size */
 .bookmark-card {
   background-color: #161d2f;
   border-radius: 12px;
   overflow: hidden;
+  position: relative;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 200px; /* fixed width */
+  max-width: 100%; /* responsive on smaller screens */
 }
 
 .bookmark-card:hover {
@@ -57,11 +62,22 @@
 }
 
 
+/* ✅ Fixed-size thumbnail container using aspect-ratio */
+.thumb-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9; /* keeps 16:9 ratio */
+  overflow: hidden;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
 .bookmark-thumb {
   width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9; 
+  height: 100%;
   object-fit: cover;
+  display: block;
+  transition: opacity 0.3s ease;
 }
 
 
@@ -130,7 +146,7 @@
 
 @media (max-width: 768px) {
   .bookmark-grid {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: 16px;
   }
 
