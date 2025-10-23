@@ -1,29 +1,35 @@
-import { useState } from 'react'
-import './App.css'
+import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
+
 import HomePage from './pages/HomePage';
 import Movies from './pages/Movies';
 import TVseries from './pages/TVseries';
 import Bookmarks from './pages/Bookmarks';
-import Signup from './pages/Signup';  // 👈 importuojam signup puslapį
+
+import SignUp from './pages/SignUp';
+import Login from './pages/Login';
+import AuthLanding from './pages/AuthLanding';
 
 export default function App() {
   return (
     <Router>
-      <div className='app-layout'>
-        {/* kairėje pusėje sidebar */}
+      <div className="app-layout">
         <Sidebar />
-        <main className='main-content'>
+        <main className="main-content">
           <Routes>
-            {/* 👇 Signup bus pagrindinis puslapis */}
-            <Route path='/' element={<Signup />} />
+            {/* ROOT: rodome pasirinkimą Login/Register */}
+            <Route path="/" element={<AuthLanding />} />
 
-            {/* 👇 kiti tavo puslapiai */}
-            <Route path='/HomePage' element={<HomePage />} />
-            <Route path='/Movies' element={<Movies />} />
-            <Route path='/TVseries' element={<TVseries />} />
-            <Route path='/Bookmarks' element={<Bookmarks />} />
+            {/* Auth puslapiai */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+
+            {/* Likę puslapiai */}
+            <Route path="/HomePage" element={<HomePage />} />
+            <Route path="/Movies" element={<Movies />} />
+            <Route path="/TVseries" element={<TVseries />} />
+            <Route path="/Bookmarks" element={<Bookmarks />} />
           </Routes>
         </main>
       </div>
