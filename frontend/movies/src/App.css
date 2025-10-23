@@ -15,3 +15,15 @@ body {
   flex-grow: 1;
   padding: 20px 40px;
 }
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #10141E;
+  color: #fff;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 90px;
+  padding: 32px;
+}
