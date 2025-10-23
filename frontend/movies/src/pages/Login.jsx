@@ -4,9 +4,11 @@ import "./Login.css";
 
 export default function Login() {
   const navigate = useNavigate();
+
+  // 👇 formos reikšmės (el.paštas, slaptažodis ir „remember me“)
   const [form, setForm] = useState({ email: "", password: "", remember: false });
-  const [errors, setErrors] = useState({});
-  const [submitting, setSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});      // 👈 klaidoms
+  const [submitting, setSubmitting] = useState(false); // 👈 rodo ar vyksta prisijungimas
 
   const onChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -28,12 +30,10 @@ export default function Login() {
 
     setSubmitting(true);
 
-    // čia paprastai siųstum į backendą
-    // fetch('/api/login', { ... })
-
+    //  čia paprastai siųstum į backend'ą prisijungimo duomenis
     setTimeout(() => {
       setSubmitting(false);
-      navigate("/HomePage"); // demo: po login'o meta į Home
+      navigate("/HomePage"); //  po sėkmingo prisijungimo meta į pagrindinį
     }, 500);
   };
 
@@ -44,6 +44,7 @@ export default function Login() {
         <p className="subtitle">Sveikas sugrįžęs 👋</p>
 
         <form onSubmit={onSubmit} noValidate>
+          {/* el. paštas */}
           <div className={`field ${errors.email ? "has-error" : ""}`}>
             <label htmlFor="email">El. paštas</label>
             <input
@@ -58,6 +59,7 @@ export default function Login() {
             {errors.email && <span className="error">{errors.email}</span>}
           </div>
 
+          {/* slaptažodis */}
           <div className={`field ${errors.password ? "has-error" : ""}`}>
             <label htmlFor="password">Slaptažodis</label>
             <input
@@ -72,6 +74,7 @@ export default function Login() {
             {errors.password && <span className="error">{errors.password}</span>}
           </div>
 
+          {/* atminti mane */}
           <div className="row-between">
             <label className="remember">
               <input
@@ -82,7 +85,9 @@ export default function Login() {
               />
               Atminti mane
             </label>
-            <a className="link" href="#" onClick={(e)=>e.preventDefault()}>Pamiršai slaptažodį?</a>
+            <a className="link" href="#" onClick={(e)=>e.preventDefault()}>
+              Pamiršai slaptažodį?
+            </a>
           </div>
 
           <button className="primary" type="submit" disabled={submitting}>

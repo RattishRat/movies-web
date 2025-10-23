@@ -2,7 +2,7 @@ import { useNavigate, Link } from "react-router-dom";
 import "./AuthLanding.css";
 
 export default function AuthLanding() {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); //  leidžia perkelti vartotoją į kitą puslapį
 
   return (
     <div className="auth-landing-wrap">
@@ -10,6 +10,7 @@ export default function AuthLanding() {
         <h1>Pasirink veiksmą</h1>
         <p className="subtitle">Prisijunk arba susikurk naują paskyrą</p>
 
+        {/* 2 mygtukai - Login ir Register */}
         <div className="actions">
           <button className="btn secondary" onClick={() => navigate("/login")}>
             Prisijungti
@@ -19,6 +20,7 @@ export default function AuthLanding() {
           </button>
         </div>
 
+        {/* mažos papildomos nuorodos */}
         <div className="tiny-links">
           <Link to="/login">Turi paskyrą? Prisijunk</Link>
           <span>•</span>
