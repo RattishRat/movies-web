@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./Bookmarks.css";
 
-export default function Bookmarks() {
+
+export default function Bookmarks({ page = "bookmarks" }) {
   const [movies, setMovies] = useState([]);
   const [series, setSeries] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -49,7 +50,6 @@ export default function Bookmarks() {
     localStorage.setItem("bookmarks", JSON.stringify(saved));
   };
 
-  // Filters
   const filteredMovies = movies
     .filter((m) => m.isBookmarked)
     .filter((m) => m.title.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -58,38 +58,50 @@ export default function Bookmarks() {
     .filter((s) => s.isBookmarked)
     .filter((s) => s.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
-  // Card Renderer
-  const renderCard = (item, type) => (
-    <div key={item.title} className="bookmark-card">
-      <div className="thumb-container">
-        <img
-          src={item.thumbnail?.regular?.large}
-          alt={item.title}
-          className="bookmark-thumb"
-        />
-        <div className="play-overlay">
-          <div className="play-button">
-            <img src="../assets/icon-play.svg" alt="Play icon" />
-            <span>Play</span>
+  const renderCard = (item, type) => {
+    // Nustatome spalvą pagal puslapį
+    const color = page === "bookmarks" ? "#ff5555" : "#1e90ff";
+
+    return (
+      <div key={item.title} className="bookmark-card">
+        <div className="thumb-container">
+          <img
+            src={item.thumbnail?.regular?.large}
+            alt={item.title}
+            className="bookmark-thumb"
+          />
+          <div className="play-overlay">
+            <div className="play-button">
+              <img src="../assets/icon-play.svg" alt="Play icon" />
+              <span>Play</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div
-        className={`bookmark-icon ${item.isBookmarked ? "bookmarked" : ""}`}
-        onClick={() => toggleBookmark(item, type)}
-      >
-        <img src="../assets/icon-nav-bookmark.svg" alt="bookmark icon" />
-      </div>
+        <div
+          className={`bookmark-icon`}
+          onClick={() => toggleBookmark(item, type)}
+        >
+          <svg
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            fill={item.isBookmarked ? color : "transparent"}
+            stroke={item.isBookmarked ? color : "#ff5555"}
+            strokeWidth="2"
+          >
+            <path d="M6 4v17l6-5.5L18 21V4z" />
+          </svg>
+        </div>
 
-      <div className="bookmark-info">
-        <p className="meta">
-          {item.year} • {item.category} • {item.rating}
-        </p>
-        <h3>{item.title}</h3>
+        <div className="bookmark-info">
+          <p className="meta">
+            {item.year} • {item.category} • {item.rating}
+          </p>
+          <h3>{item.title}</h3>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="bookmarks-page">
